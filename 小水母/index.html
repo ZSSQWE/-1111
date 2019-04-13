@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>基于css3弹性盒子模型的僧帽模型</title>
+		<style>
+			/*body渐变渲染*/
+			body{
+				/*窗口高度：vn 1vh等于视口高度的1%*/
+				height:100vh ;
+				/*无外边距*/
+				margin: 0;
+				/*弹性盒子模型*/
+				display: flex;
+				/*主轴居中*/
+				justify-content: center;
+				/*交叉轴居中*/
+				align-items: center;
+				/*背景渐变色*/
+				background: linear-gradient(to bottom,#00ffff,#0041c2,#180029);
+			}
+			/*整体设置,成为一个容器*/
+			.jellyfish{
+				position: relative;/*使用相对定位*/
+				/*添加高光效果*/
+				filter: drop-shadow(0 0 1em cyan);
+				height: 14em;
+				font-size: 4vmin;/*定义大小*/
+			}
+			/*创建身体部分*/
+			.jellyfish .body{
+				position: relative;
+				background-color: cyan;
+				width: 10em;/*10倍的像素值浏览器默认的像素值*/
+				height: 5em;/*5倍像素值浏览器默认的像素值*/
+				/*h: 色度 取值0-360之间 0是红色  120绿色 240蓝色   360红色
+				 s:饱和度 色彩的纯度 0%-100%
+				 l:亮度 0%-100% 0%最暗 100%最亮
+				 a:不透明度 取值在0.0-1.0   0.0完全透明    1.0不透明*/
+				
+				/*
+				 x y模糊
+				 * */
+				box-shadow:0 0.2em 0 cyan inset,0em 0.4em 0 hsla(0,0%,100%,0.6)inset ;/*盒子阴影*/
+			    /*左上半圆 右上半圆*/
+			    border-top-left-radius: 50% 100%;
+			    border-top-right-radius: 50% 100%;
+			    /*opacity不透明度*/
+			    opacity: 0.65;
+			}
+			/*底部波浪*/
+			.jellyfish .body .base{
+				position: absolute;/*绝对定位*/
+				width: 3em;
+				height: 1.5em;
+				background: cyan;
+				bottom: -1.5em;
+				 /*左下半圆 右下半圆*/
+			    border-bottom-left-radius: 50% 100%;
+			    border-bottom-right-radius: 50% 100%;
+			    /*使用阴影完成复制*/
+			   box-shadow: 3.5em 0 0 cyan,7em 0 0 cyan;
+			}
+			/*伪元素
+			 * after:在元素之后添加内容
+			 * before:在元素之前添加内容
+			 * 这两个属性值需要属性content:''使用
+			 */
+			.jellyfish .body .base:after{
+				content: '';
+				position: absolute;
+				width: 3em;
+				height: 1em;
+				left: 1.75em;
+				top: -0.25em;
+				/*使用镜像渐变*/
+				background: radial-gradient(circle at 50% 120%,
+				transparent 0,transparent 25%,
+				cyan 10%,cyan 100%);
+				
+			}
+			.jellyfish .body .base:before{
+				content: '';
+				position: absolute;
+				width: 3em;
+				height: 1em;
+				left: 5.25em;
+				top: -0.25em;
+				/*使用镜像渐变*/
+				background: radial-gradient(circle at 50% 120%,
+				transparent 0,transparent 25%,
+				cyan 10%,cyan 100%); 
+				
+			}
+			/*内脏*/
+			.jellyfish .guts{
+				width: 4em;
+				height: 4em;
+				background: white;
+				border-radius: 50%;
+				position: absolute;
+				left: 3em;
+				top: 1em;
+				box-shadow: -1.5em 0.7em 0 -0.8em white,
+				-1.7em -0.5em 0 -1.4em white,
+				1.8em -0.1em 0 -1.8em white,
+				1em 1em 0 -0.6em white,
+				-0.4em 1.8em 0 -1.3em white,
+				-1.3em 1.8em 0 -1.5em white;
+			}
+			/*眼睛部分*/
+			.jellyfish .eyes .eye{
+				
+				position: absolute;
+				width: 2em;
+				height: 2em;
+				border-radius: 50%;
+				background: white;
+				left: 2.8em;
+				top: 3em;
+				
+			}
+			/*右眼位置*/
+			.jellyfish .eyes .eye.right{
+				left: 5.1em;
+				
+			}
+			/*眼球部分 ：befor  ：after*/
+			.jellyfish .eyes .eye:before{
+				content: '';
+				position: absolute;
+				width: 70%;
+				height: 70%;
+				background: darkblue;
+				left: 15%;
+				top: 15%;
+				border-radius: 50%;
+				
+			}
+			/*眼珠中闪光部分*/
+				.jellyfish .eyes .eye:after{
+				content: '';
+				position: absolute;
+				width: 25%;
+				height: 25%;
+				background: white;
+				left: 25%;
+				top: 25%;
+				border-radius: 50%;
+				box-shadow: 0.4em 0.4em 0 -0.12em white,0.5em 0.1em 0 -0.15em white;
+				
+			}
+			/*基准触须部分*/
+			.jellyfish .tentacles .tentacle{
+				position: absolute;
+				width: 10em;
+				height: 8em;
+				top: 4em;
+				border: 1px solid rgba(0,255,255,0.6);/*触须颜色*/
+				/*去掉顶部*/
+				border-top: none;
+				/*去掉底部*/
+				border-bottom: none;
+				/*左上*/
+				border-top-left-radius:20% 50%;
+				/*左下*/
+				border-bottom-left-radius:10% 50%;
+				/*右上*/
+				border-top-right-radius:20% 50%;
+				/*右下*/
+				border-bottom-right-radius:10% 50%;
+				
+			}
+			/*其他胡须以基准为标准缩小即可: nth-child(2|3|4|5)    transform:scale()*/
+			.jellyfish .tentacles .tentacle:nth-child(2){
+				transform:scaleX(0.8);
+				
+			}
+			.jellyfish .tentacles .tentacle:nth-child(3){
+				transform:scaleX(0.6);
+				
+			}
+			.jellyfish .tentacles .tentacle:nth-child(4){
+				transform:scaleX(0.4);
+				
+			}
+			.jellyfish .tentacles .tentacle:nth-child(5){
+				transform:scaleX(0.2);
+				
+			}
+			/*触角第一节部分*/
+			.jellyfish .arms .arm{
+				
+				position: absolute;
+				width: 2em;
+				height: 6em;
+				top: 3em;
+				border-radius:50% ;
+				border-left:1em solid #FFFFFF ;
+				border-bottom:0.3em solid transparent ;
+				/*不透明度*/
+				opacity: 0.5;
+				/*css自定义变量 使用 var(--varname)  calc()函数用于动态计算*/
+				transform:scaleX(var(--scaleX)) scaleY(var(--scaleY))
+				rotate(calc(var(--rotate)*1deg));
+			}
+			/*触角第二节部分*/
+			.jellyfish .arms .arm:before{
+				content: ''; 
+				position: absolute;
+				width: 1.6em;
+				height: 3em;
+				top: 5.1em;
+				left: -1.5em;
+				border-radius:50% ;
+				border-right:0.6em solid #FFFFFF ;
+				border-top:0.3em solid transparent ;
+				border-bottom:0.3em solid transparent;
+				transform: rotate(-10.4deg);
+			}
+			/*触角第三节部分*/
+			.jellyfish .arms .arm:after{
+				content: '';
+				position: absolute;
+				width: 1em;
+				height: 2em;
+				top: 7.5em;
+				left: -0.05em;
+				border-radius:50% ;
+			
+				border-top:0.4em solid transparent ;
+				border-left:0.4em solid #FFFFFF;
+				transform: rotate(10deg);
+			}
+			/*移动触手位置*/
+			.jellyfish .arms .arm:nth-child(1){
+				left: 2.2em;
+			}
+			.jellyfish .arms .arm:nth-child(2){
+				left: 3em;
+			}
+			.jellyfish .arms .arm:nth-child(3){
+				left: 3.6em;
+			}
+			.jellyfish .arms .arm:nth-child(4){
+				left: 2.3em;
+			}
+			
+			.jellyfish .arms .arm:nth-child(5){
+				left: 3.8em;
+			}
+			.jellyfish .arms .arm:nth-child(6){
+				left: 4.5em;
+			}
+			.jellyfish .arms .arm:nth-child(7){
+				left: 3em;
+			}
+			.jellyfish .arms .arm:nth-child(8){
+				left: 4.5em;
+			}
+			
+	  	</style>
+	</head>
+	<body>
+		<!--/*主体部分*/-->
+		<div class="jellyfish">
+			<!--/*触角*/-->
+			<div class="arms">
+				<div class="arm" style="--scaleX:1;--scaleY:1;--rotate:3"></div>
+				<div class="arm" style="--scaleX:1;--scaleY:1.1;--rotate:2"></div>
+				<div class="arm" style="--scaleX:1;--scaleY:1.2;--rotate:1"></div>
+				<div class="arm" style="--scaleX:-1;--scaleY:1.15;--rotate:0"></div>
+				<div class="arm" style="--scaleX:-1;--scaleY:1.1;--rotate:0"></div>
+				<div class="arm" style="--scaleX:-1;--scaleY:1;--rotate:-1"></div>
+				<div class="arm" style="--scaleX:-1;--scaleY:1;--rotate:-2"></div>
+				<div class="arm" style="--scaleX:0.5;--scaleY:1.15;--rotate:-3"></div>
+			</div>
+			
+			<!--/*触须*/-->
+			<div class="tentacles">
+			   <div class="tentacle"></div>
+			   <div class="tentacle"></div>
+			   <div class="tentacle"></div>
+			   <div class="tentacle"></div>
+			   <div class="tentacle"></div>
+				
+			</div>
+			<!--内脏guts-->
+			<div class="guts"></div>
+			<!--/*头部*/-->
+			<div class="body">
+				<!--底部波浪-->
+				<div class="base"></div>
+				
+			</div>
+			
+			<!--眼睛-->
+			<div class="eyes">
+				<div class="eye left"></div>
+				<div class="eye right"></div>
+				
+			</div>
+			
+			
+			
+			
+			
+		</div>
+		
+	</body>
+</html>
